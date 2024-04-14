@@ -1,8 +1,9 @@
+import { BiSolidToTop } from "react-icons/bi";
 const Footer = () => {
   return (
     <div>
       <div className="bg-gray-950 text-white mt-5 py-5 ">
-        <footer className="grid grid-cols-2  gap-4 lg:grid-cols-4 container text-white">
+        <footer className="grid grid-cols-2  gap-4 lg:grid-cols-4 container text-white relative">
           <aside>
             <svg
               width="50"
@@ -41,6 +42,11 @@ const Footer = () => {
             <a className="link link-hover">Privacy policy</a>
             <a className="link link-hover">Cookie policy</a>
           </nav>
+          <div className="absolute top-1 right-11 ">
+            <a href="#">
+              <BiSolidToTop size={25} />
+            </a>
+          </div>
         </footer>
       </div>
       <div className="bg-black text-white">

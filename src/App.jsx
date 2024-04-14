@@ -17,23 +17,33 @@ import ListOrder from "./page/admin/ListOrder";
 import Order from "./page/user/Order";
 import Shop from "./page/public/Shop";
 import ProductDetail from "./page/public/ProductDetail";
+import ListUser from "./page/admin/ListUser";
+import CreateBlog from "./page/admin/CreateBlog";
+import Blog from "./page/public/Blog";
+import BlogDetail from "./page/public/BlogDetail";
+import ListBLog from "./page/admin/ListBLog";
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<LayoutPublic />}>
           <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="shop" element={<Shop />} />
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<CheckOut />} />
           <Route path="order" element={<Order />} />
           <Route path="product/:cate/:id" element={<ProductDetail />} />
+          <Route path="blog/:id" element={<BlogDetail />} />
         </Route>
         <Route path="/admin" element={<PrivateLayoutAdmin />}>
           <Route path="dashboard" element={<DashBoard />} />
           <Route path="create-product" element={<CreateProduct />} />
+          <Route path="create-blog" element={<CreateBlog />} />
           <Route path="list-product" element={<ListProduct />} />
           <Route path="list-order" element={<ListOrder />} />
+          <Route path="list-user" element={<ListUser />} />
+          <Route path="list-blog" element={<ListBLog />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

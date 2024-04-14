@@ -7,7 +7,7 @@ import { FaAnglesRight } from "react-icons/fa6";
 const Pagination = ({ pagination, handlePageChange }) => {
   const { limit, page, totalRows } = pagination;
   const totalPages = Math.ceil(totalRows / limit);
-  console.log(page);
+
   return (
     <div className="mt-4 flex gap-1 items-center justify-center w-full">
       <button

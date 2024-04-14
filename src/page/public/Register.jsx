@@ -4,9 +4,11 @@ import { apiRegister } from "../../api/user";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import Loading from "../../components/Loading";
+import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const [typePassword, setTypePassword] = useState("password");
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     setIsLoading(true);
@@ -34,10 +36,15 @@ const Register = () => {
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
+      <img
+        className="absolute w-screen object-cover h-screen"
+        src="https://images.wallpaperscraft.com/image/single/keyboard_laptop_gradient_203739_3840x2400.jpg"
+        alt=""
+      />
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="w-full p-6 m-auto bg-white rounded-md shadow-2xl lg:max-w-xl">
+        <div className="w-full z-50 p-6 m-auto bg-white rounded-md shadow-2xl lg:max-w-xl">
           <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
             Đăng ký
           </h1>
@@ -57,12 +64,25 @@ const Register = () => {
               <label className="block text-sm font-semibold text-gray-800">
                 Mật khẩu
               </label>
-              <input
-                type="password"
-                {...register("password")}
-                placeholder="Mật khẩu cần 6 ki tự trở lên"
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
+              <div className="relative">
+                <input
+                  type={typePassword}
+                  {...register("password")}
+                  placeholder="Mật khẩu cần 6 ki tự trở lên"
+                  className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                />
+                {typePassword == "password" ? (
+                  <FaRegEye
+                    onClick={() => setTypePassword("text")}
+                    className="absolute right-5 top-3 cursor-pointer"
+                  />
+                ) : (
+                  <FaEyeSlash
+                    onClick={() => setTypePassword("password")}
+                    className="absolute right-5 top-3 cursor-pointer"
+                  />
+                )}
+              </div>
             </div>
 
             <div className="mt-6">

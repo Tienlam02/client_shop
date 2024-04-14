@@ -7,7 +7,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { apiGetOrders, apiUpdateOrder } from "../../api/order";
 import { formatMoney } from "../../helper/formatMoney";
 import Loading from "../../components/Loading";
-const optionStatus = ["Processing", "Return", "Success", "Shipping"];
+const optionStatus = ["Processing", "Return", "Accept", "Success", "Shipping"];
 
 const ListOrder = () => {
   const { accessToken } = useSelector((state) => state.userSlice);
@@ -17,7 +17,9 @@ const ListOrder = () => {
   const [status, setStatus] = useState(null);
   const [id, setId] = useState(null);
   const fetchOrder = async () => {
+    setIsLoading(true);
     const res = await apiGetOrders(accessToken);
+    setIsLoading(false);
     if (res.success) {
       setOrder(res.order);
     }
@@ -59,7 +61,7 @@ const ListOrder = () => {
         <div
           className={` ${
             isOpen ? "" : "hidden"
-          } absolute z-40 top-0 left-0 lg:hidden w-[220px] min-h-screen bg-[#FFFFFF] text-black`}
+          } absolute z-40 top-0 left-0 lg:hidden  min-h-screen bg-[#FFFFFF] text-black`}
         >
           {isOpen && <SiderBar />}
         </div>
@@ -69,7 +71,7 @@ const ListOrder = () => {
           ) : (
             <div className="w-full p-6 m-auto bg-white rounded-md shadow-2xl ">
               <h1 className="text-3xl font-semibold text-center text-purple-700 ">
-                Quản lý dơn hàng
+                Quản lý đơn hàng
               </h1>
               <div>
                 <div className="flex justify-end my-4">

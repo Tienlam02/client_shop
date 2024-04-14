@@ -62,7 +62,7 @@ const CreateProduct = () => {
         <div
           className={` ${
             isOpen ? "" : "hidden"
-          } absolute top-0 left-0 lg:hidden w-[220px] min-h-screen bg-[#FFFFFF] text-black`}
+          } absolute top-0 left-0 lg:hidden   min-h-screen bg-[#FFFFFF] text-black`}
         >
           {isOpen && <SiderBar />}
         </div>

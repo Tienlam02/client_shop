@@ -1,34 +1,35 @@
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { FaArrowAltCircleDown } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { apiGetProducts } from "../../api/product";
 import Loading from "../../components/Loading";
-import SiderBar from "../../components/admin/SiderBar";
 import { CiFilter } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import Pagination from "../../components/Pagination";
 import Product from "../../components/Product";
 import { IoSearchOutline } from "react-icons/io5";
+import _ from "lodash";
 const Shop = () => {
   const [products, setProducts] = useState();
   const [name, setName] = useState();
+  const checkboxRef = useRef();
   const [isLoading, setIsLoading] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const { categories } = useSelector((state) => state.categorySlice);
   const [pagination, setPagination] = useState({
-    limit: 4,
+    limit: 9,
     totalRows: 0,
     page: 1,
   });
 
   const [filters, setFilters] = useState({
     page: 1,
-    limit: 4,
+    limit: 9,
   });
 
   const handleOnchangeCategory = (e) => {
-    setFilters({ limit: 4, page: 1, category: e.target.value });
+    setFilters({ limit: 9, page: 1, category: e.target.value });
     setIsOpen(!open);
   };
 
@@ -49,25 +50,31 @@ const Shop = () => {
     }
   };
   const handleOnclickSearch = () => {
-    setFilters({ limit: 4, page: 1, name: name });
+    setFilters({ limit: 9, page: 1, name: name });
     setName("");
     setIsOpen(!open);
   };
   useEffect(() => {
     fetchProducts(filters);
+    scrollTo(15, 0);
   }, [filters]);
   const handleReset = () => {
-    setFilters({ page: 1, limit: 4 });
+    setFilters({ page: 1, limit: 9 });
+    setName("");
     setIsOpen(!open);
   };
-  const handleOnchangeRadioPrice = (price) => {
-    setFilters({
-      ...filters,
-      price: price,
-    });
-    setIsOpen(!open);
+  const handleOnchangeRadioPrice = (price, e) => {
+    if (_.isEqual(price, filters?.price)) {
+      console.log(0);
+    } else {
+      setFilters({
+        ...filters,
+        price: price,
+      });
+      setIsOpen(!open);
+    }
   };
-  console.log(products);
+
   const handleOnClickUp = () => {
     setFilters({ ...filters, sort: "price" });
     setIsOpen(!open);
@@ -85,8 +92,130 @@ const Shop = () => {
         {isOpen && <AiOutlineClose />}
       </div>
       <div className="flex justify-between  ">
-        <div className=" hidden lg:block min-w-[22%] min-h-screen bg-[#FFFFFF] text-black">
-          <SiderBar />
+        <div className="  hidden lg:block min-w-[22%] min-h-screen bg-[#FFFFFF] text-black ">
+          <div className="min-h-screen   z-50 bg-white flex  ">
+            <div className=" mt-6">
+              <p className="text-xl font-bold">Loại laptop</p>
+
+              <select
+                className="py-3 lg:px-4 mt-2 pe-9 block w-full  bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
+                title="Chọn danh mục"
+                defaultValue={filters?.category}
+                onChange={(e) => handleOnchangeCategory(e)}
+              >
+                <option value="">Chọn loại laptop</option>
+                {categories?.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+              <div className=" mt-10 px-4 flex border rounded-md py-2 justify-around items-center  ">
+                <input
+                  type="text"
+                  placeholder="Nhập tên sản phẩm..."
+                  className="outline-none"
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <span
+                  onClick={() => handleOnclickSearch()}
+                  className="text-2xl hover:cursor-pointer"
+                >
+                  <IoSearchOutline />
+                </span>
+              </div>
+              <div className=" flex flex-col mt-10">
+                <span className="label-text text-xl font-bold">Chọn giá</span>
+                <label className="label cursor-pointer">
+                  <span className="label-text">00 đến 10 triệu</span>
+                  <input
+                    type="radio"
+                    name="radio-10"
+                    className="radio checked:bg-red-500"
+                    onClick={(e) =>
+                      handleOnchangeRadioPrice(
+                        {
+                          gte: 0,
+                          lte: 10000000,
+                        },
+                        e
+                      )
+                    }
+                  />
+                </label>
+              </div>
+              <div className=" ">
+                <label className="label cursor-pointer">
+                  <span className="label-text">10 đến 20 triệu</span>
+                  <input
+                    type="radio"
+                    name="radio-10"
+                    className="radio checked:bg-orange-500"
+                    onClick={() =>
+                      handleOnchangeRadioPrice({
+                        gte: 10000000,
+                        lte: 20000000,
+                      })
+                    }
+                  />
+                </label>
+              </div>
+              <div className=" ">
+                <label className="label cursor-pointer">
+                  <span className="label-text">20 đến 30 triệu</span>
+                  <input
+                    type="radio"
+                    name="radio-10"
+                    className="radio checked:bg-blue-500"
+                    onClick={() =>
+                      handleOnchangeRadioPrice({
+                        gte: 20000000,
+                        lte: 30000000,
+                      })
+                    }
+                  />
+                </label>
+              </div>
+              <div className=" ">
+                <label className="label cursor-pointer">
+                  <span className="label-text"> 30 triệu trở lên </span>
+                  <input
+                    type="radio"
+                    name="radio-10"
+                    className="radio checked:bg-slate-700"
+                    onClick={() =>
+                      handleOnchangeRadioPrice({
+                        gte: 50000000,
+                      })
+                    }
+                  />
+                </label>
+              </div>
+              <div className="flex gap-8 mt-4 items-center">
+                <p className="text-xl font-medium">Sắp xếp theo giá </p>
+                <div className="flex flex-col gap-4 text-xl">
+                  <span
+                    onClick={() => handleOnClickUp()}
+                    className="hover:cursor-pointer"
+                  >
+                    <FaArrowAltCircleUp />
+                  </span>
+                  <span
+                    onClick={() => handleOnClickDow()}
+                    className="hover:cursor-pointer"
+                  >
+                    <FaArrowAltCircleDown />
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => handleReset()}
+                className="btn btn-success mt-5 text-white"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
         </div>
 
         <div
@@ -100,12 +229,12 @@ const Shop = () => {
                 <p className="text-xl font-bold">Loại laptop</p>
 
                 <select
-                  className="py-3 px-4 mt-2 pe-9 block  bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 w-full px-4 mt-2 pe-9 block  bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
                   title="Chọn danh mục"
                   defaultValue={filters?.category}
                   onChange={(e) => handleOnchangeCategory(e)}
                 >
-                  <option value="">Chọn danh mục</option>
+                  <option value="">Chọn loại laptop</option>
                   {categories?.map((item) => (
                     <option key={item._id} value={item._id}>
                       {item.name}
@@ -117,6 +246,7 @@ const Shop = () => {
                     type="text"
                     placeholder="Nhập tên sản phẩm..."
                     className="outline-none"
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                   <span
@@ -133,12 +263,16 @@ const Shop = () => {
                     <input
                       type="radio"
                       name="radio-10"
+                      ref={checkboxRef}
                       className="radio checked:bg-red-500"
-                      onClick={() =>
-                        handleOnchangeRadioPrice({
-                          gte: 0,
-                          lte: 10000000,
-                        })
+                      onClick={(e) =>
+                        handleOnchangeRadioPrice(
+                          {
+                            gte: 0,
+                            lte: 10000000,
+                          },
+                          e
+                        )
                       }
                     />
                   </label>
@@ -239,6 +373,9 @@ const Shop = () => {
                 )}
               </div>
               <div className="grid mt-14 gap-4 grid-cols-2 md:grid-cols-3  justify-items-center">
+                {products?.length === 0 && (
+                  <span>Không tìm thấy sản phẩm nào!</span>
+                )}
                 {products?.map((item) => (
                   <Product key={item._id} item={item} />
                 ))}

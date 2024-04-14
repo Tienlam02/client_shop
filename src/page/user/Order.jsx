@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { apiGetOrder } from "../../api/order";
+import { apiCancelOrder, apiGetOrder } from "../../api/order";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { formatMoney } from "../../helper/formatMoney";
-const optionStatus = ["Processing", "Return", "Success", "Shipping"];
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Order = () => {
   const { accessToken } = useSelector((state) => state.userSlice);
-
+  const navigate = useNavigate();
   const [order, setOrder] = useState([]);
-  const [status, setStatus] = useState(null);
-  const [id, setId] = useState(null);
+
   const fetchOrder = async () => {
     const res = await apiGetOrder(accessToken);
     if (res.success) {
@@ -17,24 +17,35 @@ const Order = () => {
     }
   };
   useEffect(() => {
-    fetchOrder();
-  }, []);
-  const updateOrder = async () => {
-    try {
-      //const res = await apiUpdateOrder({ status, id }, accessToken);
-      //   if (res.success) {
-      //     fetchOrder();
-      //     toast.success(res?.message);
-      //   } else {
-      //     toast.error("Lỗi");
-      //   }
-    } catch (error) {
-      console.log(error);
+    if (!accessToken) {
+      toast.warning("Vui lòng đăng nhập");
+      navigate("/login");
     }
+    fetchOrder();
+  }, [accessToken]);
+
+  const handleUpdateOrder = (id) => {
+    Swal.fire({
+      title: "Bạn chắc chắn muốn hủy đơn hàng",
+      icon: "question", // 'success', 'error', 'warning', 'info', 'question'
+      confirmButtonText: "OK",
+      showCancelButton: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await apiCancelOrder({ id }, accessToken);
+          if (res.success) {
+            fetchOrder();
+            toast.success(res?.message);
+          } else {
+            toast.error("Lỗi");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
   };
-  useEffect(() => {
-    if (status && id) updateOrder();
-  }, [status]);
 
   return (
     <div className="w-full p-6 m-auto bg-white rounded-md shadow-2xl mt-8 ">
@@ -89,25 +100,21 @@ const Order = () => {
                   {formatMoney(item?.totalPriceOrder)}
                 </td>
 
-                <td className=" text-sm flex flex-col gap-2   lg:text-base">
+                <td className=" text-sm flex flex-col  gap-2   lg:text-base">
                   <select
-                    onChange={(e) => setStatus(e.target.value)}
-                    onClick={() => setId(item._id)}
                     value={item.status}
                     disabled
-                    className="p-1 lg:py-3 lg:px-4 lg:mt-2 lg:pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
+                    className="p-1  lg:py-3 lg:px-4 lg:mt-2 lg:pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
                   >
-                    {optionStatus.map((value, index) => (
-                      <option
-                        key={index}
-                        className="text-sm lg:text-base cursor-pointer"
-                      >
-                        {value}
-                      </option>
-                    ))}
+                    <option className="text-sm lg:text-base cursor-pointer">
+                      {item.status}
+                    </option>
                   </select>
-                  {item.status === "Processing" && (
-                    <button className="btn btn-secondary w-full">
+                  {item.status == "Proccessing" && (
+                    <button
+                      onClick={() => handleUpdateOrder(item._id)}
+                      className="btn btn-secondary w-full"
+                    >
                       Hủy đơn
                     </button>
                   )}

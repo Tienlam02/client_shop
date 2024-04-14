@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { apiUpdateCart } from "../../api/user";
 import { updateCart } from "../../features/userSlice";
-
+import { FaStar } from "react-icons/fa";
 const ProductDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,26 +50,23 @@ const ProductDetail = () => {
   }, [id, cate]);
   return (
     <div>
-      <div className="grid grid-cols-1 lg:grid-cols-2  ">
-        <div>
-          <img src={product?.image} alt="" />
+      <div className="grid grid-cols-1 lg:grid-cols-2  mt-4">
+        <div className="flex items-center">
+          <img src={product?.image} className="w-[27rem] h-auto" alt="" />
         </div>
-        <div className="flex flex-col gap-2">
-          <span className="text-xl font-medium">
-            Tên sản phẩm:{" "}
-            <span className="text-base font-normal">{product?.name}</span>
-          </span>
-          <span className="text-xl font-medium">
-            Giá:{" "}
-            <span className="text-base font-normal">
-              {formatMoney(product?.price || 0)}
-            </span>
-          </span>
-          <p className="text-xl font-medium">
-            {" "}
-            Mô tả:{" "}
-            <span className="text-base font-normal">{product?.desc}</span>
+        <div className="flex flex-col gap-4">
+          <span className="text-4xl font-medium">{product?.name}</span>
+          <p className="flex gap-2 ">
+            <FaStar className="text-orange-500" />{" "}
+            <FaStar className="text-orange-500" />
+            <FaStar className="text-orange-500" />
+            <FaStar className="text-orange-500" />
+            <FaStar className="text-orange-500" />
           </p>
+          <span className="text-xl font-medium">
+            {formatMoney(product?.price || 0)}
+          </span>
+          <p className="text-xl font-medium">{product?.desc}</p>
           <button onClick={() => handleAddCart()} className="btn btn-success">
             <MdAddShoppingCart className="text-2xl" />{" "}
             <span className="text-white">Thêm sản phẩm vào giỏ hàng</span>

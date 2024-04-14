@@ -19,7 +19,10 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!accessToken) navigate("/login");
+    if (!accessToken) {
+      toast.warning("Vui lòng đăng nhập");
+      navigate("/login");
+    }
   }, [accessToken]);
 
   const handleDecrementCart = async (item) => {
@@ -62,94 +65,105 @@ const Cart = () => {
       dispatch(updateCart(res.user));
     }
   };
+
   return (
     <div className="">
       <h1 className="mb-5 mt-3 text-center text-4xl font-bold">Giỏ hàng</h1>
-      <div className="container overflow-x-auto p-4">
-        <table className="mx-auto w-full bg-white">
-          <thead>
-            <tr>
-              <td className="py-2 px-4 text-xl font-medium">Ảnh</td>
-              <td className="py-2 px-4 text-xl font-medium">Tên</td>
-              <td className="py-2 px-4 text-xl font-medium">Giá</td>
-              <td className="py-2 px-4 text-xl font-medium">Số lượng</td>
-              <td className="py-2 px-4 text-xl font-medium">Tổng tiền</td>
-              <td className="py-2 px-4 text-xl font-medium">Hành động</td>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Dữ liệu mẫu */}
-            {user?.cart?.map((item) => (
-              <tr key={item._id}>
-                <td className="py-2  ">
-                  <img
-                    src={item?.product?.image}
-                    alt="Product 1"
-                    className="w-16   rounded-md"
-                  />
-                </td>
-                <td className="py-2 px-4">{item?.product?.name}</td>
-                <td className="py-2 px-4">
-                  {formatMoney(item?.product?.price || 0)}
-                </td>
-                <td className="py-2 px-4">
-                  <div className="flex items-center border-gray-100">
-                    <span
-                      onClick={() => handleDecrementCart(item)}
-                      className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
-                    >
-                      -
-                    </span>
-                    <input
-                      className="h-8 w-8 border bg-white text-center text-xs outline-none"
-                      type="text"
-                      value={item?.quantity}
-                      min={1}
-                      readOnly
-                    />
-                    <span
-                      onClick={() => handleIncrementCart(item)}
-                      className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
-                    >
-                      +
-                    </span>
-                  </div>
-                </td>
-                <td className="py-2 px-4">
-                  {formatMoney(item?.product?.price * +item?.quantity || 0)}
-                </td>
-                <td
-                  onClick={() => handleDelete(item._id)}
-                  className="py-2 px-4 text-2xl cursor-pointer  "
-                >
-                  <MdDeleteForever className="hover:bg-red-500" />
+      {user?.cart?.length === 0 ? (
+        <span className="flex justify-center mb-4">
+          Không có sản phẩm nào trong giỏ hàng
+        </span>
+      ) : (
+        <div className="container overflow-x-auto p-4">
+          <table className="mx-auto w-full bg-white">
+            <thead>
+              <tr>
+                <td className="py-2 px-4 text-xl font-medium">Ảnh</td>
+                <td className="py-2 px-4 text-xl font-medium">Tên</td>
+                <td className="py-2 px-4 text-xl font-medium">Giá</td>
+                <td className="py-2 px-4 text-xl font-medium">Số lượng</td>
+                <td className="py-2 px-4 text-xl font-medium">Tổng tiền</td>
+                <td className="py-2 px-4 text-xl font-medium flex items-center justify-center ">
+                  Hành động
                 </td>
               </tr>
-            ))}
-            {/* Thêm các hàng dữ liệu khác tương tự */}
-          </tbody>
-          <tfoot className=" "></tfoot>
-        </table>
-        <Link
-          className="flex items-center mt-4 gap-2 p-3 bg-slate-200  border"
-          to="/"
-        >
-          <span className="text-2xl">
-            <IoIosReturnLeft />
-          </span>
-          <span>Tiếp tục mua sắm</span>
-        </Link>
-      </div>
+            </thead>
+            <tbody>
+              {/* Dữ liệu mẫu */}
+              {user?.cart?.map((item) => (
+                <tr key={item._id}>
+                  <td className="py-2  ">
+                    <img
+                      src={item?.product?.image}
+                      alt="Product 1"
+                      className="w-16   rounded-md"
+                    />
+                  </td>
+                  <td className="py-2 px-4">{item?.product?.name}</td>
+                  <td className="py-2 px-4">
+                    {formatMoney(item?.product?.price || 0)}
+                  </td>
+                  <td className="py-2 px-4">
+                    <div className="flex items-center border-gray-100">
+                      <span
+                        onClick={() => handleDecrementCart(item)}
+                        className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
+                      >
+                        -
+                      </span>
+                      <input
+                        className="h-8 w-8 border bg-white text-center text-xs outline-none"
+                        type="text"
+                        value={item?.quantity}
+                        min={1}
+                        readOnly
+                      />
+                      <span
+                        onClick={() => handleIncrementCart(item)}
+                        className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
+                      >
+                        +
+                      </span>
+                    </div>
+                  </td>
+                  <td className="py-2 px-4">
+                    {formatMoney(item?.product?.price * +item?.quantity || 0)}
+                  </td>
+                  <td
+                    onClick={() => handleDelete(item._id)}
+                    className="py-2 px-4 text-2xl cursor-pointer flex items-center justify-center  "
+                  >
+                    <MdDeleteForever className="hover:bg-red-500" />
+                  </td>
+                </tr>
+              ))}
+              {/* Thêm các hàng dữ liệu khác tương tự */}
+            </tbody>
+            <tfoot className=" "></tfoot>
+          </table>
+          <Link
+            className="flex items-center mt-4 gap-2 p-3 bg-slate-200  border"
+            to="/"
+          >
+            <span className="text-2xl">
+              <IoIosReturnLeft />
+            </span>
+            <span>Tiếp tục mua sắm</span>
+          </Link>
+        </div>
+      )}
       <div className="flex flex-col space-y-3 border-t">
         <span className="text-2xl font-bold mt-4">Cộng giỏ hàng</span>
         <span className="text-xl font-medium">
           Tổng tiền: {formatMoney(handleTotalPrice() || 0)}
         </span>
-        <Link to="/checkout">
-          <button className="btn btn-success text-white">
-            Tiến hành thanh toán
-          </button>
-        </Link>
+
+        <button
+          className="btn btn-success text-white"
+          disabled={user?.cart?.length == 0}
+        >
+          <Link to="/checkout"> Tiến hành thanh toán</Link>
+        </button>
       </div>
     </div>
   );

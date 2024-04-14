@@ -1,25 +1,39 @@
 import { Link, NavLink } from "react-router-dom";
-import { GrCart } from "react-icons/gr";
+import { FaShoppingBag } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { IoMdHome } from "react-icons/io";
+import { FaNewspaper } from "react-icons/fa";
 const Navbar = () => {
   const { user } = useSelector((state) => state.userSlice);
 
   return (
     <nav className="border-b border-t mt-4 py-2 flex justify-between items-center">
-      <ul className="flex   gap-4 text-xl">
+      <ul className="flex gap-4  lg:gap-8 text-xl">
         <li>
-          <NavLink to="/" activeclassname="active">
-            Home
+          <NavLink
+            to="/"
+            activeclassname="active"
+            className="flex items-center gap-1 lg:gap-2"
+          >
+            <IoMdHome className="hidden lg:block" /> Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/shop" activeclassname="active">
-            Cửa hàng
+          <NavLink
+            to="/shop"
+            activeclassname="active"
+            className="flex items-center gap-1 lg:gap-2"
+          >
+            <FaShoppingBag className="hidden lg:block" /> Cửa hàng
           </NavLink>
         </li>
         <li>
-          <NavLink to="/contact" activeclassname="active">
-            Contact
+          <NavLink
+            to="/blog"
+            activeclassname="active"
+            className="flex items-center gap-1 lg:gap-2"
+          >
+            <FaNewspaper className="hidden lg:block" /> Tin tức
           </NavLink>
         </li>
       </ul>

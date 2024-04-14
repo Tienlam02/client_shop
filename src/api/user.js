@@ -62,3 +62,33 @@ export const apiIncrementCart = (data, token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const apiGetUsers = (token) =>
+  axios({
+    url: "user",
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+export const apiChangeRole = (data, token) =>
+  axios({
+    url: "user/changeRole",
+    data,
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+export const apiDeleteUserByAd = (data, token) =>
+  axios({
+    url: "user/delete-user",
+    data,
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });

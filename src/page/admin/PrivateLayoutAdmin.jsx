@@ -8,7 +8,7 @@ const PrivateLayoutAdmin = () => {
   const { user, accessToken } = useSelector((state) => state.userSlice);
   const checkAdmin = async (accessToken) => {
     const res = await apiAuthAdmin(accessToken);
-    console.log(res);
+
     if (res.success) {
       setIsAdmin(true);
     } else {

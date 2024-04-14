@@ -6,9 +6,11 @@ import Loading from "../../components/Loading";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/userSlice";
+import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const [typePassword, setTypePassword] = useState("password");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onSubmit = async (data) => {
@@ -17,7 +19,7 @@ const Login = () => {
     setIsLoading(false);
     if (res.success) {
       dispatch(login(res));
-      console.log(res);
+
       navigate("/");
     } else {
       Swal.fire({
@@ -29,11 +31,16 @@ const Login = () => {
   };
 
   return (
-    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
+    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden ">
+      <img
+        className="absolute  w-screen h-screen object-cover "
+        src="https://w.forfun.com/fetch/f4/f42bd10be1fa5abd2bf7b72cc45bc154.jpeg?w=1000&r=0.5625"
+        alt=""
+      />
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="w-full p-6 m-auto bg-white rounded-md shadow-2xl lg:max-w-xl">
+        <div className="w-full z-50 p-6 m-auto bg-white rounded-md shadow-2xl lg:max-w-xl">
           <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
             Đăng nhập
           </h1>
@@ -45,7 +52,6 @@ const Login = () => {
               <input
                 type="text"
                 {...register("username")}
-                defaultValue={"duonglam546@gmail.com"}
                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -53,12 +59,25 @@ const Login = () => {
               <label className="block text-sm font-semibold text-gray-800">
                 Mật khẩu
               </label>
-              <input
-                type="password"
-                {...register("password")}
-                defaultValue={111111}
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
+              <div className="relative">
+                {" "}
+                <input
+                  type={typePassword}
+                  {...register("password")}
+                  className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                />
+                {typePassword == "password" ? (
+                  <FaRegEye
+                    onClick={() => setTypePassword("text")}
+                    className="absolute right-5 top-3 cursor-pointer"
+                  />
+                ) : (
+                  <FaEyeSlash
+                    onClick={() => setTypePassword("password")}
+                    className="absolute right-5 top-3 cursor-pointer"
+                  />
+                )}
+              </div>
             </div>
             <a href="#" className="text-xs text-purple-600 hover:underline">
               Quên mật khẩu?

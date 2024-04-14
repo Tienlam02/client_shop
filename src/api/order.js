@@ -38,3 +38,13 @@ export const apiUpdateOrder = (data, token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+export const apiCancelOrder = (data, token) =>
+  axios({
+    url: "order",
+    data: { data },
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });

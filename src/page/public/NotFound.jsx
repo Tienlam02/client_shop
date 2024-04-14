@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 const NotFound = () => {
   return (
-    <div className="min-h-screen flex flex-grow items-center justify-center bg-gray-50">
-      <div className="rounded-lg bg-white p-8 text-center shadow-xl">
+    <div className="min-h-screen relative flex flex-grow items-center justify-center bg-gray-50">
+      <div className="w-screen absolute h-screen bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100" />
+      <div className="rounded-lg z-50 bg-white p-8 text-center shadow-xl">
         <h1 className="mb-4 text-4xl font-bold">404</h1>
         <p className="text-gray-600">
           Oops! The page you are looking for could not be found.

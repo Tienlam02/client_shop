@@ -13,10 +13,8 @@ const UpdateProduct = ({ productEdit, setProductEdit }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
-  console.log(productEdit);
 
   const onSubmit = async (data) => {
-    console.log(data);
     if (data.image[0]) {
       let formData = new FormData();
       formData.append("image", data.image[0]);

@@ -80,7 +80,7 @@ const ListProduct = () => {
   useEffect(() => {
     fetchProducts(filters);
   }, [productEdit, filters]);
-  console.log(products);
+
   return (
     <div>
       <div
@@ -98,7 +98,7 @@ const ListProduct = () => {
         <div
           className={` ${
             isOpen ? "" : "hidden"
-          } absolute z-40 top-0 left-0 lg:hidden w-[220px] min-h-screen bg-[#FFFFFF] text-black`}
+          } absolute z-40 top-0 left-0 lg:hidden   min-h-screen bg-[#FFFFFF] text-black`}
         >
           {isOpen && <SiderBar />}
         </div>
