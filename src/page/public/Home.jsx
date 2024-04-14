@@ -49,9 +49,11 @@ const Home = () => {
                 <span>Siêu sale giữa tháng</span>
                 <span> Laptop sale nửa giá</span>
               </p>
-              <button className="btn btn-outline btn-secondary hover:cursor-pointer">
-                Mua ngay
-              </button>
+              <Link to="/shop">
+                <button className="btn btn-outline btn-secondary hover:cursor-pointer">
+                  Xem ngay
+                </button>
+              </Link>
             </div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4  gap-2 mb-8">
@@ -110,9 +112,11 @@ const Home = () => {
                 <span>Đừng bỏ lỡ sự ưu đãi</span>
                 <span> hãy sở hữu ngay</span>
               </p>
-              <button className="btn btn-outline btn-secondary hover:cursor-pointer">
-                Mua ngay
-              </button>
+              <Link to="/shop">
+                <button className="btn btn-outline btn-secondary hover:cursor-pointer">
+                  Xem ngay
+                </button>
+              </Link>
             </div>
           </div>
           <p className="text-2xl font-medium my-4 uppercase">

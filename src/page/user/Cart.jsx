@@ -158,12 +158,15 @@ const Cart = () => {
           Tổng tiền: {formatMoney(handleTotalPrice() || 0)}
         </span>
 
-        <button
-          className="btn btn-success text-white"
-          disabled={user?.cart?.length == 0}
-        >
-          <Link to="/checkout"> Tiến hành thanh toán</Link>
-        </button>
+        <Link to="/checkout" className="flex ">
+          {" "}
+          <button
+            className="btn btn-success text-white w-full"
+            disabled={user?.cart?.length == 0}
+          >
+            Tiến hành thanh toán{" "}
+          </button>
+        </Link>
       </div>
     </div>
   );
