@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 import Loading from "../../components/Loading";
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
+import imgregister from "../../assets/keyboard_laptop_gradient_203739_3840x2400.jpg";
+
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +40,7 @@ const Register = () => {
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <img
         className="absolute w-screen object-cover h-screen"
-        src="https://images.wallpaperscraft.com/image/single/keyboard_laptop_gradient_203739_3840x2400.jpg"
+        src={imgregister}
         alt=""
       />
       {isLoading ? (

@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import {
   apiDecrementCart,
   apiDeleteCart,
-  apiGetCurrent,
   apiIncrementCart,
 } from "../../api/user";
 import { updateCart } from "../../features/userSlice";

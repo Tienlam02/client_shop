@@ -363,7 +363,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="bg-[#202C43] flex flex-col items-center py-8 gap-4 mt-4 mb-8">
+          {/* <div className="bg-[#202C43] flex flex-col items-center py-8 gap-4 mt-4 mb-8">
             <p className="text-white text-base lg:text-xl text-center font-medium px-2">
               ĐĂNG KÝ NHẬN EMAIL THÔNG BÁO KHUYẾN MẠI HOẶC ĐỂ ĐƯỢC TƯ VẤN MIỄN
               PHÍ
@@ -375,7 +375,7 @@ const Home = () => {
               />
               <button className="btn join-item rounded-sm lg:px-12">Gửi</button>
             </div>
-          </div>
+          </div> */}
           <hr />
         </div>
       )}

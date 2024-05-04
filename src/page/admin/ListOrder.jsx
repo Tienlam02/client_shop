@@ -16,6 +16,7 @@ const ListOrder = () => {
   const [order, setOrder] = useState([]);
   const [status, setStatus] = useState(null);
   const [id, setId] = useState(null);
+  const [idUser, setIdUser] = useState(null);
   const fetchOrder = async () => {
     setIsLoading(true);
     const res = await apiGetOrders(accessToken);
@@ -29,8 +30,9 @@ const ListOrder = () => {
   }, []);
   const updateOrder = async () => {
     try {
+      console.log(id, status, idUser);
       setIsLoading(true);
-      const res = await apiUpdateOrder({ status, id }, accessToken);
+      const res = await apiUpdateOrder({ status, id, idUser }, accessToken);
       if (res.success) {
         fetchOrder();
         setIsLoading(false);
@@ -148,7 +150,9 @@ const ListOrder = () => {
                         <td className=" text-sm   lg:text-base">
                           <select
                             onChange={(e) => setStatus(e.target.value)}
-                            onClick={() => setId(item._id)}
+                            onClick={() => {
+                              setId(item._id), setIdUser(item.orderBy);
+                            }}
                             value={item.status}
                             className="p-1 lg:py-3 lg:px-4 lg:mt-2 lg:pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
                           >

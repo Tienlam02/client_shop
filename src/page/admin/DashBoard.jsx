@@ -24,7 +24,7 @@ const DashBoard = () => {
     totalOrderOfDay: 0,
     newUserOfDay: 0,
   });
-  console.log(report?.numberOfProductPerCat?.map((item) => item.categoryName));
+
   const { accessToken } = useSelector((state) => state.userSlice);
   const dataCat = {
     labels: report?.numberOfProductPerCat?.map((item) => item.categoryName),

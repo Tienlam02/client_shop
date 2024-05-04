@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/userSlice";
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
+import imglogin from "../../assets/f42bd10be1fa5abd2bf7b72cc45bc154.jpeg";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +35,7 @@ const Login = () => {
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden ">
       <img
         className="absolute  w-screen h-screen object-cover "
-        src="https://w.forfun.com/fetch/f4/f42bd10be1fa5abd2bf7b72cc45bc154.jpeg?w=1000&r=0.5625"
+        src={imglogin}
         alt=""
       />
       {isLoading ? (
